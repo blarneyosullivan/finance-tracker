@@ -27,9 +27,17 @@ init_stock_lookup = function() {
   );
   
   
-} 
+} ;
+
+var hide_spinner = function() {
+  $('#spinner').hide();
+};
+
+var show_spinner = function() {
+  $('#spinner').show();
+};
 
 
 $(document).ready(function() {
   init_stock_lookup();
-})
+});

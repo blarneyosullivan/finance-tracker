@@ -1,5 +1,8 @@
 Rails.application.routes.draw do
   devise_for :users
+  resources :user_stocks, except: [:show, :edit, :update]
+  # create option / association will be in controller
+
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
 
