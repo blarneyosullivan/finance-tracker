@@ -39,4 +39,54 @@ class User < ActiveRecord::Base
   end
   
   
+  # add methods for partial friends _lookup
+  
+  def not_friends_with?(friend_id)
+    friendships.where(friend_id: friend_id).count < 1  
+  end
+  
+  def except_current_user(users)
+    # loop through object and reject element where userid = caller userid ie current user
+    users.reject { |user| user.id == self.id }
+    
+  end
+  
+  def self.search(param)
+    # if blank
+    return User.none if param.blank?
+    # if not blank
+    param.strip!
+    param.downcase!
+    
+    (first_name_matches(param) + last_name_matches(param) + email_matches(param)).uniq
+    
+  end
+  
+  # class function starts with self
+  def self.first_name_matches(param)
+  # call matches with field name to match  
+    matches('first_name', param)
+  end
+  
+  
+  def self.last_name_matches(param)
+    matches('last_name', param)
+    
+  end
+  
+  def self.email_matches(param)
+    matches('email', param)
+
+  end
+  
+  def self.matches(field_name, param)
+    where("lower(#{field_name}) like ?", "%#{param}%")  
+  end
+  
+  
+  
+  
+  
+  
+  
 end
